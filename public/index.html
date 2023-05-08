@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecomerce</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mixitup/3.3.1/mixitup.min.js" integrity="sha512-nKZDK+ztK6Ug+2B6DZx+QtgeyAmo9YThZob8O3xgjqhw2IVQdAITFasl/jqbyDwclMkLXFOZRiytnUrXk/PM6A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="../scripts/main.js" defer></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="../styles/styles.css">
+</head>
+
+<body>
+    <!-- header -->
+    <header>  
+        <nav>
+            <a href="#home">
+                <div>
+                    <img src="../public/images/Academlogo.png" alt="logo">
+                    <span id="a"><b>STORE</b></span>
+                </div> 
+            </a>
+                     
+            
+            <ul>
+                <li><a href="#home"><span id="a1">Home</span></a></li>
+                <li><a href="#products"><span id="a2">Products</span></a></li>
+            </ul>
+                <i class='bx bx-sun darkmodeoff' ></i>
+                <i class='bx bx-moon '></i>
+                <i class='bx bx-cart'></i>
+                <span class="canti"></span>
+           
+            
+            
+        </nav>     
+    </header>
+    <!-- cuerpo -->
+    <div class="container">
+        <!-- home -->
+        <div class="home" id="home">
+            <div class="newcolec">
+                <h2>New Sweatshirt COLLECTIONS 2022</h2>
+                <p>Latest arrival of the new Hanes Midweight Crewneck sweatshirt imported from the 2022 series, with a modern design.</p>
+                <p>$14.00</p>
+                <a href="#products">Show more</a>
+            </div>
+            <div class="imgnewcolec">
+                <img src="../public/images/sweater2.png" alt="">
+            </div>
+        </div>
+        <div class="containerProdusctos" id="products">
+            <div class="filtro">
+                <button class="all "  data-filter="all">Show all</button>
+                <button class="shirt " data-filter=".shirt">Shirt</button>
+                <button class="hoddie " data-filter=".hoddie">Hoddie</button>
+                <button class="sweater " data-filter=".sweater">Sweater</button>
+            </div>
+            <div class="productos"></div>
+        </div>
+    </div>
+    <div class="cart-com"> 
+            <i class='bx bx-x cerrar'></i>
+            <div class="producSelec"></div>
+            <div class="comparProduc">
+                    <div class="producs"></div>                  
+                    <button class="compra">Comprar</button>
+            </div>               
+    </div>
+    <footer>
+        <div class="fot1">
+            <div class="info">
+                <b class="m">Our information</b>
+                <p>Toluca - Mexico</p>
+            </div>
+            
+                
+                 <div class="about">
+                    <b class="m">About Us</b>
+                    <p>Support Center</p> 
+                    <p>Customer</p>
+                    <p>Support</p>
+                    <p>About Us</p>
+                    <p>Copy Right</p>      
+                 </div>   
+            
+            <div class="prod">
+                <b class="m">Product</b>
+                <p>Hoodies</p>
+                <p>Shirts</p>
+                <p>About Us</p>
+                <p>Sweatshirts</p>
+            </div>
+            <div class="social">
+                <b class="m">social</b>
+                <div>
+                <i class='bx bxl-facebook'></i>
+                <i class='bx bxl-twitter'></i>
+                <i class='bx bxl-instagram'></i>
+                </div>
+                
+            </div>
+        </div>
+        <div class="fot2">
+            <h2>Luis Seña Ávila,  Luchito721@hotmail.com y repositorio de la persona que lo realizo</h2>
+        </div>
+    </footer>
+</body>
+</html>
