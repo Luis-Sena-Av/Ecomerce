@@ -12,45 +12,92 @@ async function getcharaters(url){
     }
 }
 
-function mostrarProductos(stocktaking){
+function mostrarProductos(){
+    let stocktaking=JSON.parse(window.localStorage.getItem("products"));
+    let noche=JSON.parse(window.localStorage.getItem("noche"))||{};
     let html="";
-    for (const {category,description,id,image,name,price,quantity } of stocktaking) {
+    if(Object.values(noche).includes("darkmodeoff")){
+        for (const {category,id,image,name,price,quantity } of stocktaking) {
       
-        if(quantity>0){
-            html+=`
-        <div class="container_producto ${category}">
-            <div class="producto">
-                <img src="${image}" alt="${name}">       
-            </div>
-            <div class="descripcion ">
-                    <h3>$${price}.00 <span>Stock: ${quantity}</span></h3>
-                    <a href="#">${name} | <span>${category}</span></a>
-                    <i class='bx bx-plus' id="${id}"></i>
-            </div> 
-            
-        </div>                 
-        `;
-        }else{
-            html+=`
-            <div class="container_producto ${category}">
-                <div class="producto">
-                    <img src="${image}" alt="${name}">  
-                    <p class="agotado">Producto agotado</p>    
-                
+            if(quantity>0){
+                html+=`
+            <div class="container_producto ${category} container_productodark">
+                <div class="producto backdroundark">
+                    <img src="${image}" alt="${name}">       
                 </div>
-                <div class="descripcion ">
-                        <h3>$${price}.00 <span>Stock: ${quantity}</span></h3>
-                        <a href="#">${name} | <span>${category}</span></a>
+                <div class="descripcion descripciondark">
+                        <h3 class="blanco1">$${price}.00 <span>Stock: ${quantity}</span></h3>
+                        <a href="" class="blanco mode" id="${id}">${name} | <span>${category}</span></a>
+                        <i class='bx bx-plus' id="${id}"></i>
                 </div> 
                 
             </div>                 
             `;
+            }else{
+                html+=`
+                <div class="container_producto ${category} container_productodark">
+                    <div class="producto backdroundark">
+                        <img src="${image}" alt="${name}">  
+                        <p class="agotado">Producto agotado</p>    
+                    
+                    </div>
+                    <div class="descripcion descripciondark">
+                            <h3 class="blanco1">$${price}.00 <span>Stock: ${quantity}</span></h3>
+                            <a href="#" class="blanco mode" id="${id}">${name} | <span>${category}</span></a>
+                    </div> 
+                    
+                </div>                 
+                `;
+            }
+            
+            
         }
+     }else{
+        for (const {category,id,image,name,price,quantity } of stocktaking) {
+      
+            if(quantity>0){
+                html+=`
+            <div class="container_producto ${category}">
+                <div class="producto">
+                    <img src="${image}" alt="${name}">       
+                </div>
+                <div class="descripcion">
+                        <h3>$${price}.00 <span>Stock: ${quantity}</span></h3>
+                        <a class="mode"  id="${id}">${name} | <span>${category}</span></a>
+                        <i class='bx bx-plus' id="${id}"></i>
+                </div> 
+                
+            </div>                 
+            `;
+            }else{
+                html+=`
+                <div class="container_producto ${category}">
+                    <div class="producto">
+                        <img src="${image}" alt="${name}">  
+                        <p class="agotado">Producto agotado</p>    
+                    
+                    </div>
+                    <div class="descripcion">
+                            <h3>$${price}.00 <span>Stock: ${quantity}</span></h3>
+                            <a class="mode"  id="${id}">${name} | <span>${category}</span></a>
+                    </div> 
+                    
+                </div>                 
+                `;
+            }
+            
+            
+        }
+     }
         
         
-    }
+
+    
+
+    
     const stockproducts=document.querySelector(".productos")
     stockproducts.innerHTML=html;
+    
 }
 
 function menuFiltro(){ mixitup = mixitup(".productos", {
@@ -64,6 +111,7 @@ function menuFiltro(){ mixitup = mixitup(".productos", {
 }
 
 function carro(){
+    cart=JSON.parse(window.localStorage.getItem("Prodselect"))
     const comprar=document.querySelector(".bx-cart")
     const comprar1=document.querySelector(".canti")
     const cerarHtml=document.querySelector(".cerrar")
@@ -86,6 +134,7 @@ function pinatrCart(cart){
     const comprar1=document.querySelector(".canti")
     let can_produc=0;
     let totalpagar=0;
+    
     for (const {cantidadProd,price} of Object.values(cart)) {
         can_produc+=cantidadProd;
         totalpagar+=cantidadProd*price
@@ -113,10 +162,10 @@ function pinatrCart(cart){
     }
  
     if(can_produc===1){
-        html1=`<p class="ff"> ${can_produc} producto <span>$${totalpagar}.00</span></p>`;  
+        html1=`<p class="ff pdark"> ${can_produc} producto <span>$${totalpagar}.00</span></p>`;  
     }
     if(can_produc!==1){
-        html1=`<p class="ff"> ${can_produc} productos <span>$${totalpagar}.00</span></p>`;        
+        html1=`<p class="ff pdark"> ${can_produc} productos <span>$${totalpagar}.00</span></p>`;        
     }
     comprar1.textContent=can_produc;    
     cart_comHtml.innerHTML=html;
@@ -124,13 +173,33 @@ function pinatrCart(cart){
 }
 
 
-function alCarroPrincipal(stocktaking){
+function alCarroPrincipal(cart){
     const productHtml= document.querySelector(".productos");
     const actionsHtml= document.querySelector(".producSelec");
     const comprarHtml= document.querySelector(".compra");
-    let cart=JSON.parse(window.localStorage.getItem("Prodselect"))||{};
+    const ventanamodalhtml=document.querySelector(".modal");
+    stocktaking=JSON.parse(window.localStorage.getItem("products"));  
     
-    
+    ventanamodalhtml.addEventListener('click',function(e){
+        if(e.target.classList.contains("plus-modal")){
+            const id=Number(e.target.id);
+            const productClic=stocktaking.find(element => element.id ===id);
+          
+            if(cart[productClic.id]){
+                if(cart[productClic.id].cantidadProd===productClic.quantity){
+                    alert("No hay mas de estos en el stock");
+                }else{
+                    cart[productClic.id].cantidadProd++;
+                }
+                 
+            }else{
+                cart[productClic.id]={...productClic,cantidadProd:1}
+            }
+            window.localStorage.setItem("Prodselect",JSON.stringify(cart)); 
+            pinatrCart(cart)  
+        }
+    });
+
     productHtml.addEventListener('click',function(e){
         if(e.target.classList.contains("bx-plus")){
             const id=Number(e.target.id);
@@ -147,7 +216,6 @@ function alCarroPrincipal(stocktaking){
                 cart[productClic.id]={...productClic,cantidadProd:1}
             }
             window.localStorage.setItem("Prodselect",JSON.stringify(cart)); 
-            console.log(cart); 
             pinatrCart(cart)  
         }
           
@@ -155,14 +223,12 @@ function alCarroPrincipal(stocktaking){
     });
     
     actionsHtml.addEventListener('click',function(e){
-        console.log(e.target.classList);
         if(e.target.classList.contains("bx-minus")){
             const id=Number(e.target.classList[2]);
             const productClic=Object.values(cart).find(element => element.id ===id);
             if(productClic.cantidadProd===1){
                 confirm("Desea eliminar el producto")
-                delete cart[productClic.id];
-                
+                delete cart[productClic.id]; 
             }else{
                 cart[productClic.id].cantidadProd--;
             }
@@ -183,28 +249,23 @@ function alCarroPrincipal(stocktaking){
                 delete cart[productClic.id];
         }
         window.localStorage.setItem("Prodselect",JSON.stringify(cart));
-        pinatrCart(cart);
+        pinatrCart(cart);   
     });
 
     comprarHtml.addEventListener('click',function(e){
         for (const produc of Object.values(cart)) {
-
             const id=produc.id;
             if(stocktaking[produc.id-1].id===produc.id){
                 stocktaking[produc.id-1].quantity=stocktaking[produc.id-1].quantity-produc.cantidadProd  
-                console.log("Hola")
             }
-            console.log(stocktaking[produc.id-1]);
-            console.log(produc);
-            console.log(stocktaking[produc.id-1].quantity);
         }
         cart={};
         window.localStorage.setItem("Prodselect",JSON.stringify(cart));
         window.localStorage.setItem("products",JSON.stringify(stocktaking));
         pinatrCart(cart);
-        mostrarProductos(stocktaking);
-        
+        mostrarProductos();        
     });
+    modal(stocktaking)
     
 }
 
@@ -241,86 +302,137 @@ function animanavbar(){
 }
 
 function darkmode(){
-    const noche=document.querySelector(".bx-moon");
     const dia=document.querySelector(".bx-sun");
-    const bodyHtml=document.querySelector("body");
-    const homeHtml=document.querySelector(".home");
-    const newcolecHtml=document.querySelector(".newcolec");
-    const productsHtml=document.querySelector(".productos");
-    const imagenewc=document.querySelector(".imgnewcolec");
-    const ancor=document.querySelector("#a");
-    const ancor1=document.querySelector("#a1");
-    const ancor2=document.querySelector("#a2");
-    const countcarhtml=document.querySelector(".canti");
-    const anima= document.querySelector("header");
-    const filtrHtml= document.querySelector(".shirt");
-    const filtrHtml1= document.querySelector(".all");
-    const filtrHtml2= document.querySelector(".hoddie");
-    const filtrHtml3= document.querySelector(".sweater");
+    const clase_noche=document.querySelector(".bx-moon");
     //noche 
-    noche.addEventListener('click',function(){
-        if(window.scrollY>100){
-            anima.classList.remove("anima-headr")
-            anima.classList.add("anima-headrdark")
-        }
-        noche.classList.toggle("darkmodeoff");
+    clase_noche.addEventListener('click',function(){
+        clase_noche.classList.toggle("darkmodeoff");
         dia.classList.toggle("darkmodeoff");
-        bodyHtml.classList.toggle("bodydark");
-        homeHtml.classList.toggle("homedark");
-        newcolecHtml.classList.toggle("newcolecdark");
-        productsHtml.classList.toggle("productosdark");
-        imagenewc.classList.toggle("imgnewcolecdark");
-        ancor.classList.toggle("adrk");
-        ancor1.classList.toggle("adrk");
-        ancor2.classList.toggle("adrk");
-        countcarhtml.classList.toggle("cantidark");
-        filtrHtml.classList.toggle("f1");   
-        filtrHtml1.classList.toggle("f1");    
-        filtrHtml2.classList.toggle("f1");  
-        filtrHtml3.classList.toggle("f1");     
+        window.localStorage.setItem("noche",JSON.stringify(clase_noche.classList));
+        mostrarProductos();
+        dark ()
         animanavbar()
-       
-
-
     });
     // dia
     dia.addEventListener('click',function(){
-        if(window.scrollY>100){
-            anima.classList.remove("anima-headrdark")
-            anima.classList.add("anima-headr")
-        }
+        clase_noche.classList.toggle("darkmodeoff");
         dia.classList.toggle("darkmodeoff");
-        noche.classList.toggle("darkmodeoff");
-        bodyHtml.classList.toggle("bodydark");
-        homeHtml.classList.toggle("homedark");
-        newcolecHtml.classList.toggle("newcolecdark");
-        productsHtml.classList.toggle("productosdark");
-        imagenewc.classList.toggle("imgnewcolecdark");
-        ancor.classList.toggle("adrk");
-        ancor1.classList.toggle("adrk");
-        ancor2.classList.toggle("adrk");
-        countcarhtml.classList.toggle("cantidark");
-        filtrHtml.classList.toggle("f1");  
-        filtrHtml1.classList.toggle("f1");  
-        filtrHtml2.classList.toggle("f1");  
-        filtrHtml3.classList.toggle("f1");  
+        window.localStorage.setItem("noche",JSON.stringify(clase_noche.classList));
+        mostrarProductos();
+        dark ()
         animanavbar()
+    });
     
+}
+function dark (){
+    let noche=JSON.parse(window.localStorage.getItem("noche"))
+    const bodyHtml=document.querySelector("body");
+    const newcolecHtml=document.querySelector(".imgnewcolec");
+    const carcomHtml= document.querySelector(".cart-com");
+    const cerrarhtml= document.querySelector(".cerrar");
+    const fot2Html=document.querySelector(".fot2");
+    const anima= document.querySelector("header");
+    const ancor=document.querySelector("#a");
+    const ancor1=document.querySelector("#a1");
+    const ancor2=document.querySelector("#a2");
+    const filtrHtml= document.querySelector(".filtro .shirt");
+    const filtrHtml1= document.querySelector(".filtro .all");
+    const filtrHtml2= document.querySelector(".filtro .hoddie");
+    const filtrHtml3= document.querySelector(".filtro .sweater");
+    const footerHtml= document.querySelector("footer");   
+    
+    if(Object.values(noche).includes("darkmodeoff")){
+        bodyHtml.classList.add("bodydark");
+        newcolecHtml.classList.add("imagenewcolecdark");
+        carcomHtml.classList.add("cart-comdark");
+        cerrarhtml.classList.add("cerrardark");
+        footerHtml.classList.add("footerdark");
+        fot2Html.classList.add("imagenewcolecdark")
+        anima.classList.remove("anima-headr")
+        anima.classList.add("anima-headrdark")
+        ancor.classList.add("navdark")
+        ancor1.classList.add("navdark")
+        ancor2.classList.add("navdark")
+        filtrHtml.classList.add("navdark")
+        filtrHtml2.classList.add("navdark")
+        filtrHtml1.classList.add("navdark")
+        filtrHtml3.classList.add("navdark")
+       
+    }else{
+        bodyHtml.classList.remove("bodydark");
+        newcolecHtml.classList.remove("imagenewcolecdark");
+        carcomHtml.classList.remove("cart-comdark");
+        cerrarhtml.classList.remove("cerrardark");
+        footerHtml.classList.remove("footerdark");
+        fot2Html.classList.remove("imagenewcolecdark")
+        anima.classList.add("anima-headr")
+        anima.classList.remove("anima-headrdark")
+        ancor.classList.remove("navdark")
+        ancor1.classList.remove("navdark")
+        ancor2.classList.remove("navdark")
+        filtrHtml.classList.remove("navdark")
+        filtrHtml2.classList.remove("navdark")
+        filtrHtml1.classList.remove("navdark")
+        filtrHtml3.classList.remove("navdark")
+    }
+}
+
+
+function modal(stocktaking){
+    const modalhtml=document.querySelector(".productos");
+    const ventanamodalhtml=document.querySelector(".modal");
+    let html=``;
+    modalhtml.addEventListener('click',function(e){
+        
+        if(e.target.classList.contains("mode")){
+            ventanamodalhtml.classList.toggle("mostrarmodal")
+            id=Number(e.target.id) 
+            const producto=stocktaking.find(element => element.id ===id);
+            html=`<div class="contmodal">
+                <div class="momal-img">
+                    <i class='bx bx-x cerrar'></i>
+                    <img src=${producto.image} alt=""></img>
+                </div>
+
+                <div class="modal-info">
+                    <h3>${producto.name}</h3>
+                    <h4>${producto.description}</h4>
+                    <div>
+                        <p><b>$${producto.price}.00</b><i class='bx bx-plus plus-modal' id=${e.target.id}></i> </p>
+                        <h4>stock: ${producto.quantity}</h4>
+                    </div>  
+                </div>
+            </div>`
+        }
+        ventanamodalhtml.innerHTML=html;     
     });
 
+    ventanamodalhtml.addEventListener('click',function(e){
+        if(e.target.classList.contains("cerrar")){
+            ventanamodalhtml.classList.toggle("mostrarmodal");
+        }
+    });   
 }
 
 async function main (){
-    let stocktaking=JSON.parse(window.localStorage.getItem("products")) || await getcharaters(url);
+    let stocktaking=JSON.parse(window.localStorage.getItem("products"))||await getcharaters(url);
     let cart=JSON.parse(window.localStorage.getItem("Prodselect"))||{};
-    window.localStorage.setItem("cart",JSON.stringify(cart));
-    mostrarProductos(stocktaking)
+    let noche=JSON.parse(window.localStorage.getItem("noche"))||{};
+    const diamode=document.querySelector(".bx-sun");
+    const clase_noche=document.querySelector(".bx-moon");
+    if(Object.values(noche).includes("darkmodeoff")){
+        diamode.classList.toggle("darkmodeoff");  
+    }else{
+        clase_noche.classList.toggle("darkmodeoff");
+    }
+    mostrarProductos()
     menuFiltro()
-    carro(cart)
-    alCarroPrincipal(stocktaking);
+    carro()
+    alCarroPrincipal(cart);
     pinatrCart(cart)
     animanavbar()
-    darkmode()
+    darkmode(noche)
+    dark ()
 }
 
 main();

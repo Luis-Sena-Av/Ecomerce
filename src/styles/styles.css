@@ -12,6 +12,7 @@
     --color-fot2:#E94959;
     --bg-dark:#1F1D2A;
     --img-newcolecdark:#9ADDE0;
+    --cardark:#1B1A23;
 }
 /* Universales */
 *{
@@ -20,18 +21,21 @@
     box-sizing: border-box;
     scroll-margin-top: var(--h-header);
 }
+html {
+    scroll-behavior: smooth;
+  }
 body{
     background-color: var(--bg);
     color: var(--color-leter);
 }
 .bodydark{
-    background-color: var(--bg-dark);
+    --bg:var(--bg-dark);
     color: var(--white);
 }
 img{
     width: 100%;
     display: block;
-    /* object-fit: cover; */
+    object-fit: cover;
 }
 li{
     list-style: none;
@@ -68,6 +72,9 @@ header>nav{
     align-items: center;
     position: relative;
     height: var(--h-header);
+}
+.navdark{
+    color: white;
 }
 header>nav>i{
 font-size: 3rem;
@@ -140,6 +147,7 @@ width: 35px;
     grid-template-columns: 2fr 1fr;
     margin: 0 auto;
     gap: 1rem;
+    min-height: 80vh;
 }
 .homedark{
     background-color: var(--bg-dark);
@@ -174,16 +182,22 @@ background-color: var(--bg-dark);
 }
 .imgnewcolec{
     background-color:var(--color-fot2);
-    height: 80vh;
+    min-height: 400px;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 1rem;
+   
     
 }
-.imgnewcolecdark{
-    background-color: var(--img-newcolecdark);
+.imagenewcolecdark{
+    --color-fot2:var(--img-newcolecdark);
 }
+.imgnewcolec img{
+    width: 100%;
+    display: block;
+}
+
 /* Fin home */
 
 
@@ -195,8 +209,9 @@ background-color: var(--bg-dark);
     gap: 1rem;
     margin: 0 auto;
     max-width: 1024px;
-    padding: 0 2rem;
+    padding: 2rem 2rem;
     background-color: var(--bg);
+    scroll-behavior: smooth;
 }
 .productosdark{
     background-color: var(--bg-dark);
@@ -206,6 +221,13 @@ background-color: var(--bg-dark);
     padding: 1rem;
     text-align: center;
     position: relative;
+    width: 100%;
+}
+.producto img{
+transition: transform 0.5s;
+}
+.producto img:hover{
+    transform:translateY(-0.8rem);
 }
 .descripcion{
     display: flex;
@@ -217,18 +239,32 @@ background-color: var(--bg-dark);
     font-family: Arial, Helvetica, sans-serif;
     position: relative;
 }
+.descripciondark{
+    background-color: #1B1A23;
+    color: var(--white);
+}
+
+.backdroundark{
+    background-color: var(--black);
+}
 .descripcion a{
     text-decoration: none;
     transition: color .7s;
     font-size: 1.5rem;
+    cursor: pointer;
 }
 .descripcion a:hover{
     color: red;
 }
+
 .container_producto{
     border-radius: 1rem;
     overflow: hidden;
-    background-color:var(--bg);
+    background-color:var(--bg-descripcion);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.container_productodark{
+    background-color:#1B1A23;
     
 }
 .descripcion h3 span{
@@ -240,6 +276,12 @@ background-color: var(--bg-dark);
 .descripcion h3{
     font-size: 1.5rem;
     color: var(--color-leter);
+}
+.blanco{
+    color: var(--white);
+}
+.blanco1{
+    --color-leter:var(--white);
 }
 .containerProdusctos{
     width: 100%;
@@ -260,11 +302,9 @@ background-color: var(--bg-dark);
     border: none;
     background-color: var(--bg);
     font-size: 1.5rem;
-    color: var(--color-leter);
     transition:background-color 0.9s ;
     cursor: pointer;
 }
-
 .filtro  .f1{
     background-color: var(--black);
     color: var(--white);
@@ -286,9 +326,10 @@ background-color: var(--bg-dark);
     background-color: var(--color-leter);
     color: var(--white);
 }
-
 .container{
-    display: block;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
 }
 .descripcion .bx-plus{
     background-color:var(--white);
@@ -300,6 +341,7 @@ background-color: var(--bg-dark);
     top: -1.7rem;
     color: var(--color-leter);
     transition: background-color 1s;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 .descripcion .bx-plus:hover{
     background-color: red;
@@ -329,6 +371,9 @@ footer{
     gap: 2rem;
     margin-top: 4rem;  
 }
+.footerdark{
+    background-color: var(--black);
+}
 .fot1{
     justify-content: space-between;
     padding: 0 28px;
@@ -336,12 +381,16 @@ footer{
     flex-direction: row;
     font-size: 1.5rem;
 }
+footer p{
+    color: green;
+}
 .fot2{
     text-align: center;
     background-color:var(--color-fot2);
     padding: 1rem;
     color: var(--white);
 }
+
 /* Fin footer */
 
 /* Carrito */
@@ -358,12 +407,19 @@ footer{
     transition: right 0.4s;
     z-index: 200;
 }
+
+.cart-comdark{
+    --bg-descripcion: var(--cardark);
+}
 .producSelec{
     background-color: var(--bg-descripcion);
     width: 100%;
     height: 80%;
     overflow-y: scroll;
     margin-top: 1rem;
+}
+.producSelecdark{
+    background-color: var(--cardark);
 }
 .comparProduc{
     background-color:var(--bg-descripcion);
@@ -386,6 +442,14 @@ footer{
     border-radius: 1rem;
     margin: 1rem;
     background-color: var(--bg);
+}
+.producs{
+    background-color: var(--white);
+    color: var(--black);
+}
+.producs p{
+    background-color: var(--white);
+    color: var(--black);
 }
 .cart-info{
     display: flex;
@@ -420,11 +484,8 @@ footer{
     text-align: center;
     padding: 1rem;
     font-size: 1rem;
-    color: black;
-    background-color: var(--white);
 }
 .comparProduc>p span{
-    background-color: var(--white);
     padding-right: 1rem;
     font-weight: bold;
     font-size: 1.5rem;
@@ -446,9 +507,10 @@ footer{
     font-family: 'Roboto', sans-serif;
     text-align: end;
 }
-
-
-
+.pdark{
+    background-color:--cardark;
+    color: var(--white);
+}
 .m{
     margin-bottom: 1.5rem;
 }
@@ -476,6 +538,9 @@ footer{
     top: 1rem;
     font-size: 1.5rem;
     cursor: pointer;
+}
+.cerrardark{
+    color: var(--white);
 }
 
 .anima-headr{
@@ -508,6 +573,76 @@ a{
 ::-webkit-scrollbar-thumb:hover {
     background: #b30000; 
 }
+/* ventana modal */
+.modal{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #00000090;
+    z-index: 300;
+    position: fixed;
+    top: 0;
+}
+.mostrarmodal{
+    display: none;  
+}
+.contmodal{
+    width: 500px;
+    background-color: var(--white);
+    border-radius: 1rem;
+    position: relative;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+.plus-modal{
+    background-color: var(--black);
+    color: white;
+    font-size: 1rem;
+    padding: 0.5rem;
+    border-radius: 50%;
+    position: absolute;
+    left: 7rem;
+    bottom: 2.6rem;
+    transition:background-color 0.4s ;
+}
+.plus-modal:hover{
+    background-color: red;
+}
+.momal-img{
+    position: relative;
+}
+.momal-img .bx-x{
+    position: absolute;
+    right: -1rem;
+    top: -1rem;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.modal-info h4{
+color:#b4b3b3;
+font-family: serif;
+}
+.modal-info div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between ;
+    text-align: center;
+    padding: 1rem 0rem;
+}
+.modal-info div b{
+    font-size: 1.3rem;
+}   
+.modal-info{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem ;
+}
+
 /* ---Fin scroll general */
 
 /* scroll carrito */
