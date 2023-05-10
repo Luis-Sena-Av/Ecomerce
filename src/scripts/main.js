@@ -27,7 +27,7 @@ function mostrarProductos(){
                 </div>
                 <div class="descripcion descripciondark">
                         <h3 class="blanco1">$${price}.00 <span>Stock: ${quantity}</span></h3>
-                        <a href="" class="blanco mode" id="${id}">${name} | <span>${category}</span></a>
+                        <a  class="blanco mode" id="${id}">${name} | <span>${category}</span></a>
                         <i class='bx bx-plus' id="${id}"></i>
                 </div> 
                 
@@ -38,12 +38,12 @@ function mostrarProductos(){
                 <div class="container_producto ${category} container_productodark">
                     <div class="producto backdroundark">
                         <img src="${image}" alt="${name}">  
-                        <p class="agotado">Producto agotado</p>    
-                    
+                             <p class="agotado">Producto agotado</p>    
+                        </img>
                     </div>
                     <div class="descripcion descripciondark">
                             <h3 class="blanco1">$${price}.00 <span>Stock: ${quantity}</span></h3>
-                            <a href="#" class="blanco mode" id="${id}">${name} | <span>${category}</span></a>
+                            <a class="blanco mode" id="${id}">${name} | <span>${category}</span></a>
                     </div> 
                     
                 </div>                 
@@ -75,7 +75,7 @@ function mostrarProductos(){
                     <div class="producto">
                         <img src="${image}" alt="${name}">  
                         <p class="agotado">Producto agotado</p>    
-                    
+                        </img>
                     </div>
                     <div class="descripcion">
                             <h3>$${price}.00 <span>Stock: ${quantity}</span></h3>
@@ -173,12 +173,11 @@ function pinatrCart(cart){
 }
 
 
-function alCarroPrincipal(cart){
+function alCarroPrincipal(cart,stocktaking){
     const productHtml= document.querySelector(".productos");
     const actionsHtml= document.querySelector(".producSelec");
     const comprarHtml= document.querySelector(".compra");
     const ventanamodalhtml=document.querySelector(".modal");
-    stocktaking=JSON.parse(window.localStorage.getItem("products"));  
     
     ventanamodalhtml.addEventListener('click',function(e){
         if(e.target.classList.contains("plus-modal")){
@@ -198,6 +197,11 @@ function alCarroPrincipal(cart){
             window.localStorage.setItem("Prodselect",JSON.stringify(cart)); 
             pinatrCart(cart)  
         }
+
+        if(e.target.classList.contains("cerrar")){
+            ventanamodalhtml.classList.toggle("mostrarmodal");
+        }
+
     });
 
     productHtml.addEventListener('click',function(e){
@@ -218,7 +222,11 @@ function alCarroPrincipal(cart){
             window.localStorage.setItem("Prodselect",JSON.stringify(cart)); 
             pinatrCart(cart)  
         }
-          
+        if(e.target.classList.contains("mode")){
+            id=Number(e.target.id) 
+            const producto=stocktaking.find(element => element.id ===id);
+            modal(id,producto)
+        }   
        
     });
     
@@ -265,13 +273,32 @@ function alCarroPrincipal(cart){
         pinatrCart(cart);
         mostrarProductos();        
     });
-    modal(stocktaking)
     
 }
 
 function animanavbar(){
     const dia=document.querySelector(".bx-sun");
     const anima= document.querySelector("header");
+    const btmenu= document.querySelector("nav");
+    const menu= document.querySelector(".menuu");
+    const luna= document.querySelector(".bx-moon");
+    const menuhmt= document.querySelector(".canti");
+
+    btmenu.addEventListener('click',function(e){
+        if(e.target.classList.contains("bx-menu")){
+            menu.classList.toggle("mostrarmenu");
+            luna.classList.toggle("mostrarmodal")
+            menuhmt.classList.add("z")
+        }
+    });
+    menu.addEventListener('click',function(e){
+        if(e.target.classList.contains("cerrarmenu")){
+            menu.classList.toggle("mostrarmenu");
+            luna.classList.togle("mostrarmodal")
+            menuhmt.classList.remove("z")
+        }
+    });
+
     if(dia.classList.contains("darkmodeoff")){
         document.addEventListener('scroll',function(){
             if(window.scrollY>100){
@@ -325,7 +352,7 @@ function darkmode(){
     
 }
 function dark (){
-    let noche=JSON.parse(window.localStorage.getItem("noche"))
+    let noche= JSON.parse(window.localStorage.getItem("noche"))||{};
     const bodyHtml=document.querySelector("body");
     const newcolecHtml=document.querySelector(".imgnewcolec");
     const carcomHtml= document.querySelector(".cart-com");
@@ -378,46 +405,99 @@ function dark (){
 }
 
 
-function modal(stocktaking){
-    const modalhtml=document.querySelector(".productos");
+function modal(id,producto){
+    let noche= JSON.parse(window.localStorage.getItem("noche"))||{};
     const ventanamodalhtml=document.querySelector(".modal");
-    let html=``;
-    modalhtml.addEventListener('click',function(e){
+    let html=``;    
+    // noche
+             if(Object.values(noche).includes("darkmodeoff")){
+                console.log("noche");
+                if(producto.quantity>0){
+                    html=`<div class="contmodal contmodaldark">
+                                <div class="momal-img">
+                                    <i class='bx bx-x cerrar cerrardark'></i>
+                                    <img src=${producto.image} alt=""></img>
+                                </div>
+    
+                                <div class="modal-info">
+                                    <h3>${producto.name}</h3>
+                                    <h4>${producto.description}</h4>
+                                <div>
+                                    <p><b>$${producto.price}.00</b><i class='bx bx-plus plus-modal' id=${id}></i></b></p>
+                                    <h4>stock: ${producto.quantity}</h4>
+                                </div>  
+                        </div>
+                        </div>`
+                }
+                else{
+                    html=`<div class="contmodal contmodaldark">
+                                <div class="momal-img">
+                                    <i class='bx bx-x cerrar cerrardark'></i>
+                                    <img src=${producto.image} alt=""><div class="agotado">Producto agotado</div></img>
+                                    
+                                </div>
+    
+                                <div class="modal-info">
+                                    <h3>${producto.name}</h3>
+                                    <h4>${producto.description}</h4>
+                                <div>
+                                    <p><b>$${producto.price}.00</b></p>
+                                    <h4>stock: ${producto.quantity}</h4>
+                                </div>  
+                                
+                        </div>
+                        </div>`
+                }              
+            }
+            else{
+                console.log("dia");
+                if(producto.quantity>0){
+                    html=`<div class="contmodal">
+                    <div class="momal-img">
+                        <i class='bx bx-x cerrar'></i>
+                        <img src=${producto.image} alt=""></img>
+                    </div>
+    
+                    <div class="modal-info">
+                        <h3>${producto.name}</h3>
+                        <h4>${producto.description}</h4>
+                        <div>
+                            <p><b>$${producto.price}.00</b><i class='bx bx-plus plus-modal' id=${id}></i> </p>
+                            <h4>stock: ${producto.quantity}</h4>
+                        </div>  
+                    </div>
+                    </div>`
+
+                }else{
+                    html=`<div class="contmodal">
+                        <div class="momal-img">
+                            <i class='bx bx-x cerrar'></i>
+                            <img src=${producto.image} alt=""><div class="agotado">Producto agotado</div></img>
+                        </div>
         
-        if(e.target.classList.contains("mode")){
-            ventanamodalhtml.classList.toggle("mostrarmodal")
-            id=Number(e.target.id) 
-            const producto=stocktaking.find(element => element.id ===id);
-            html=`<div class="contmodal">
-                <div class="momal-img">
-                    <i class='bx bx-x cerrar'></i>
-                    <img src=${producto.image} alt=""></img>
-                </div>
+                        <div class="modal-info">
+                            <h3>${producto.name}</h3>
+                            <h4>${producto.description}</h4>
+                            <div>
+                                <p><b>$${producto.price}.00</b></p>
+                                <h4>stock: ${producto.quantity}</h4>
+                            </div>  
+                        </div>
+                    </div>`   
+                }
+                
+            }  
 
-                <div class="modal-info">
-                    <h3>${producto.name}</h3>
-                    <h4>${producto.description}</h4>
-                    <div>
-                        <p><b>$${producto.price}.00</b><i class='bx bx-plus plus-modal' id=${e.target.id}></i> </p>
-                        <h4>stock: ${producto.quantity}</h4>
-                    </div>  
-                </div>
-            </div>`
-        }
-        ventanamodalhtml.innerHTML=html;     
-    });
-
-    ventanamodalhtml.addEventListener('click',function(e){
-        if(e.target.classList.contains("cerrar")){
-            ventanamodalhtml.classList.toggle("mostrarmodal");
-        }
-    });   
+    
+            ventanamodalhtml.innerHTML=html; 
+            ventanamodalhtml.classList.toggle("mostrarmodal");    
+      
 }
 
 async function main (){
     let stocktaking=JSON.parse(window.localStorage.getItem("products"))||await getcharaters(url);
     let cart=JSON.parse(window.localStorage.getItem("Prodselect"))||{};
-    let noche=JSON.parse(window.localStorage.getItem("noche"))||{};
+    let noche= JSON.parse(window.localStorage.getItem("noche"))||{};
     const diamode=document.querySelector(".bx-sun");
     const clase_noche=document.querySelector(".bx-moon");
     if(Object.values(noche).includes("darkmodeoff")){
@@ -428,10 +508,10 @@ async function main (){
     mostrarProductos()
     menuFiltro()
     carro()
-    alCarroPrincipal(cart);
+    alCarroPrincipal(cart,stocktaking,noche);
     pinatrCart(cart)
     animanavbar()
-    darkmode(noche)
+    darkmode()
     dark ()
 }
 

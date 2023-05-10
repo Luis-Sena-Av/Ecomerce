@@ -180,15 +180,17 @@ background-color: var(--bg-dark);
     color: var(--white);
     font-size: 1rem;
 }
+.filtro .mixitup-control-active{
+    background-color: black;
+    color: white;
+}
 .imgnewcolec{
     background-color:var(--color-fot2);
     min-height: 400px;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
-   
-    
+    gap: 1rem; 
 }
 .imagenewcolecdark{
     --color-fot2:var(--img-newcolecdark);
@@ -298,12 +300,12 @@ transition: transform 0.5s;
    gap: 1rem;
    grid-template-columns: 150px 150px 150px 150px;
 }
-.filtro .shirt,.filtro .all,.filtro .shirt,.filtro .hoddie,.filtro .sweater{
+ .shirt, .all,.shirt,.hoddie,.sweater{
     border: none;
-    background-color: var(--bg);
     font-size: 1.5rem;
     transition:background-color 0.9s ;
     cursor: pointer;
+    background-color: var(--bg);
 }
 .filtro  .f1{
     background-color: var(--black);
@@ -588,6 +590,7 @@ a{
 .mostrarmodal{
     display: none;  
 }
+
 .contmodal{
     width: 500px;
     background-color: var(--white);
@@ -597,6 +600,9 @@ a{
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+}
+.contmodaldark{
+    background-color: var(--cardark);
 }
 .plus-modal{
     background-color: var(--black);
@@ -642,6 +648,43 @@ font-family: serif;
     flex-direction: column;
     gap: 0.5rem ;
 }
+.bx-menu{
+    display: none;
+    position: absolute;
+}
+.bx-menu .cierraaa{
+    display: none;
+}
+.menuu{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    font-size: 3rem;
+    background-color:var(--white);
+    transition: right 0.5s;
+    z-index: 300;
+}
+.menuu .cerrarmenu{
+    position: absolute;
+    right: 1.2rem;
+    top: 1.8rem;
+    font-size: 1.8rem;
+    cursor: pointer;
+    border-radius: 1rem;
+}
+
+
+.mostrarmenu{
+    right: 0;
+}
+
 
 /* ---Fin scroll general */
 
@@ -652,10 +695,86 @@ font-family: serif;
 /* Fin otros */
 
 /* Condicionales */
-@media (max-width:500px){
+@media (max-width:900px){
+    .productos{   
+        grid-template-columns: 1fr 1fr;       
+    }
+}
+
+@media(max-width:700px){
+    .fot1{
+        flex-direction: column;
+    }
+    .about,.info,.social,.prod{
+        margin-bottom: 2rem;
+    }
+    .m{
+        margin: 0;
+    }
+    nav ul{
+        display:none;
+    }
+    .bx-cart{
+        position: absolute;
+        right: 4.6rem;
+        font-size: 2rem;
+    }
+    .bx-moon{
+        right: 7rem;
+        font-size: 1.7rem;
+    }
+    .canti{
+        right: 4.2rem;
+        font-size: 0.9rem;
+        width: 22px;
+        height: 22px;
+        bottom: 15%;
+    }
+    .bx-menu{
+        display: block;
+        position: absolute;
+        right: 2rem;
+        font-size: 1.5rem;
+    }
     .cart-com{
         width: 100%;
     }
+
+    .filtro{
+        justify-content: center;
+        grid-template-columns: 150px 150px;
+        gap: 0;
+     }
+
+    .containerProdusctos{
+        width: 100%;
+        grid-template-rows: 100px 1fr;
+    }
+    .filtro .shirt,.filtro .all,.filtro .shirt,.filtro .hoddie,.filtro .sweater{
+        padding: 1rem 0;
+    }
+    .bx-sun{
+        right: 7rem;
+        font-size: 1.7rem;
+    }
+
+}
+
+@media(max-width:630px){
+   .productos{
+    grid-template-rows: repeat(auto-fit, minmax(600px,1fr));
+    grid-template-columns:400px ;
+    margin: 0 auto;
+    
+   }
+   .productos img{
+    width: 350px;
+    display: block;
+   }
+   .containerProdusctos{
+    align-content: center;
+    align-items: center;
+   } 
 
 }
 /* -----Fin condicionales */
