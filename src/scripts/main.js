@@ -357,6 +357,8 @@ function animanavbar(){
        }
     });
 
+    
+
    
 
     
@@ -560,8 +562,14 @@ document.addEventListener('click',function(e){
 console.log(e.target.classList);
 });
 
-
-
 }
+
+window.addEventListener("load",function(){
+    setTimeout(function(){
+        document
+                .querySelector(".load")
+                .classList.add("cierraload")
+    },3000);
+});
 
 main();

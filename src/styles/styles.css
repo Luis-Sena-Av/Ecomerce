@@ -724,6 +724,57 @@ font-family: serif;
 }
 
 
+
+
+
+@keyframes loading{
+    0% {
+        transform: translateY(15);
+    }
+    50% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(15);
+    }
+}
+.load{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    z-index: 2000;
+    color: red;
+    position: fixed;
+    top: 0;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 1s,visibility 1s;
+}
+.load svg {
+    fill: red;
+    width: 100%;
+    height: 100%;
+}
+.animaload{
+    width: 150px;
+    height: 150px;
+    position: relative;
+    animation: mymove 1.5s infinite;
+  }
+  
+  @keyframes mymove {
+    0%   {transform: translateY(-100px);}
+    50%  {transform: translateY(0px)}
+    100%  {transform: translateY(-100px)}
+  }
+
+  .cierraload{
+    opacity: 0;
+    visibility: hidden;
+  }
 /* ---Fin scroll general */
 
 /* scroll carrito */
