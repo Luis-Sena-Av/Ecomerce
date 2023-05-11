@@ -731,7 +731,7 @@ font-family: serif;
     .container{
         grid-template-rows: 100vh 1fr 120vh;
         gap: 3rem;
-     }
+    }
     .home{
         background-color:var(--bg);
         display: grid;
@@ -848,8 +848,7 @@ font-family: serif;
 
 @media (max-width:537px){
     .container{
-        gap: 5rem;
-
+        grid-template-rows: 100vh 1fr 1fr;
     }
 }
 @media (max-width:490px){
