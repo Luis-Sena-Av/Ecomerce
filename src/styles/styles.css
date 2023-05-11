@@ -606,6 +606,7 @@ a{
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    box-shadow: rgb(36, 37, 37) 0px 30px 40px 5px;
 }
 .contmodaldark{
     background-color: var(--cardark);
@@ -622,6 +623,10 @@ a{
     height: 25px;
     align-items: center;
     justify-content: center;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.rojo{
+    color:red
 }
 .plus-modal:hover{
     background-color: red;

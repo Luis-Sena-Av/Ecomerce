@@ -289,7 +289,11 @@ function alCarroPrincipal(cart,stocktaking){
 function animanavbar(){
     const dia=document.querySelector(".bx-sun");
     const anima= document.querySelector("header");
-    const btmenu= document.querySelector("nav");
+    const productosHtml= document.querySelector(".containerProdusctos");
+    const menuproducHtml= document.querySelector("#a2");
+    const homecHtml= document.querySelector("#a1");
+    const menuproducHtml1= document.querySelector(".menuu .ble1");
+    const homecHtml1= document.querySelector(".menuu .bla1");
     const menu= document.querySelector(".menuu");
 
     document.addEventListener('click',function(e){
@@ -301,6 +305,12 @@ function animanavbar(){
         if(e.target.classList.contains("cerrarmenu")){
             menu.classList.remove("mostrarmenu");
         }
+        if(e.target.classList.contains("bla1")){
+            menu.classList.remove("mostrarmenu");
+        };
+        if(e.target.classList.contains("ble1")){
+            menu.classList.remove("mostrarmenu");
+        };
     });
 
     if(dia.classList.contains("darkmodeoff")){
@@ -329,6 +339,26 @@ function animanavbar(){
         });
 
     }
+
+    document.addEventListener('scroll',function(){
+       const posicionproduc=productosHtml.getBoundingClientRect().top-75;
+       if(posicionproduc<0){
+        menuproducHtml.classList.add("rojo");
+        homecHtml.classList.remove("rojo");
+        menuproducHtml1.classList.add("rojo");
+        homecHtml1.classList.remove("rojo");
+
+       }else{
+        menuproducHtml.classList.remove("rojo");
+        homecHtml.classList.add("rojo");
+        menuproducHtml1.classList.remove("rojo");
+        homecHtml1.classList.add("rojo");
+
+       }
+    });
+
+   
+
     
 }
 
