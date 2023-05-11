@@ -848,7 +848,7 @@ font-family: serif;
 
 @media (max-width:537px){
     .container{
-        grid-template-rows: 100vh 1fr 1fr;
+        grid-template-rows: 100vh 1fr 0.4fr;
     }
 }
 @media (max-width:490px){
