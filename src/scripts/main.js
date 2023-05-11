@@ -436,7 +436,7 @@ function modal(id,producto){
                                     <h3>${producto.name}</h3>
                                     <h4>${producto.description}</h4>
                                 <div>
-                                    <p><b>$${producto.price}.00</b><i class='bx bx-plus plus-modal' id=${id}></i></b></p>
+                                    <p><b>$${producto.price}.00<i class='bx bx-plus plus-modal' id=${id}></i></b></p>
                                     <h4>stock: ${producto.quantity}</h4>
                                 </div>  
                         </div>
@@ -475,7 +475,7 @@ function modal(id,producto){
                         <h3>${producto.name}</h3>
                         <h4>${producto.description}</h4>
                         <div>
-                            <p><b>$${producto.price}.00</b><i class='bx bx-plus plus-modal' id=${id}></i> </p>
+                            <p><b>$${producto.price}.00<i class='bx bx-plus plus-modal' id=${id}></i></b></p>
                             <h4>stock: ${producto.quantity}</h4>
                         </div>  
                     </div>
