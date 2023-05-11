@@ -141,11 +141,11 @@ width: 35px;
 /* home */
 .home{
     height: 100vh;
-    max-width: 1024px;
+    width: 100%;
     background-color:var(--bg);
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    margin: 0 auto;
+    grid-template-columns: 1.5fr 1fr;
+    margin: 0;
     gap: 1rem;
     min-height: 80vh;
 }
@@ -186,10 +186,10 @@ background-color: var(--bg-dark);
 }
 .imgnewcolec{
     background-color:var(--color-fot2);
-    min-height: 400px;
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 80vh;
     gap: 1rem; 
 }
 .imagenewcolecdark{
@@ -725,6 +725,32 @@ font-family: serif;
 }
 
 @media(max-width:700px){
+    .home{
+        height: 100vh;
+        width: 100%;
+        background-color:var(--bg);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        margin: 0;
+        gap: 1rem;
+        min-height: 80vh;
+    }
+    .newcolec{
+        grid-column: 1/3;
+        grid-row: 2/3;
+        display: flex;
+        justify-content:start ;
+        align-items: start;
+        padding: 2rem;
+        
+    }
+    .imgnewcolec{
+        grid-column: 2/3;
+        grid-row: 1/2;
+        height: 50vh;
+    }
+
     .fot1{
         flex-direction: column;
     }
@@ -786,7 +812,7 @@ font-family: serif;
 
 @media(max-width:630px){
    .productos{
-    grid-template-rows: repeat(auto-fit, minmax(600px,1fr));
+    grid-template-rows: repeat(1fr);
     grid-template-columns:400px;
     margin: 0 auto;
     padding: 2rem;
@@ -811,5 +837,63 @@ font-family: serif;
     margin: 0;
     padding: 4rem 0;
    }
+}
+
+@media (max-width:537px){
+    .container{
+        gap: 5rem;
+
+    }
+}
+@media (max-width:490px){
+    .productos{
+        grid-template-rows: repeat(1fr);
+        grid-template-columns:300px;
+        margin: 0 auto;
+        padding: 1.3rem;
+        
+       }
+       .productos img{
+        width: 230px;
+        display: block;
+       }
+       .container{
+        gap: 8rem;
+
+    }
+}
+@media (max-width:410px){
+    .productos{
+        grid-template-rows: repeat(1fr);
+        grid-template-columns:250px;
+        margin: 0 auto;
+        padding: 1.3rem;
+        
+       }
+       .productos img{
+        width: 90%;
+        display: block;
+        object-fit: cover;
+       }
+       .container{
+        gap: 8rem;
+
+        }
+        .containerProdusctos{
+            padding: 0;
+            margin: 0;
+        }
+        .filtro{
+            justify-content: center;
+            grid-template-columns: 100px 100px;
+            gap: 0;
+        }
+          .shirt, .all,.shirt,.hoddie,.sweater{
+             border: none;
+             font-size: 1rem;
+             transition:background-color 0.9s ;
+             cursor: pointer;
+             background-color: var(--bg);
+         }
 }
 /* -----Fin condicionales */
