@@ -53,7 +53,7 @@ nav ul li{
     cursor: pointer;
 }
 header{
-    width: 100vw;
+    width: 100%;
     background-color: transparent;
     position: fixed;
     top: 0;
@@ -140,8 +140,8 @@ width: 35px;
 
 /* home */
 .home{
-    height: 100vh;
-    width: 100%;
+    grid-row: 1/2;
+    grid-column: 1/2;
     background-color:var(--bg);
     display: grid;
     grid-template-columns: 1.5fr 1fr;
@@ -206,7 +206,7 @@ background-color: var(--bg-dark);
 /* productos */
 .productos{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
     overflow: hidden;
     gap: 1.5rem;
     margin: 0 auto;
@@ -288,6 +288,8 @@ transition: transform 0.5s;
     --color-leter:var(--white);
 }
 .containerProdusctos{
+    grid-row: 2/3;
+    grid-column: 1/2;
     width: 100%;
     display: grid;
     grid-template-rows: 50px 1fr;
@@ -331,9 +333,9 @@ transition: transform 0.5s;
     color: var(--white);
 }
 .container{
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
+   display: grid;
+   grid-template-columns: 1fr;
+   grid-template-rows: 100vh 1fr 80vh;
 }
 .descripcion .bx-plus{
     background-color:var(--white);
@@ -366,7 +368,8 @@ transition: transform 0.5s;
 
 /* footer */
 footer{
-    position: absolute;
+    grid-row: 3/4;
+    grid-column: 1/2;
     display: flex;
     background-color:var(--color-footer);
     padding: 80px 32px;
@@ -725,9 +728,11 @@ font-family: serif;
 }
 
 @media(max-width:700px){
+    .container{
+        grid-template-rows: 100vh 1fr 120vh;
+        gap: 3rem;
+     }
     .home{
-        height: 100vh;
-        width: 100%;
         background-color:var(--bg);
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -742,7 +747,7 @@ font-family: serif;
         display: flex;
         justify-content:start ;
         align-items: start;
-        padding: 2rem;
+        padding: 1rem 2rem;
         
     }
     .imgnewcolec{
@@ -797,7 +802,6 @@ font-family: serif;
     }
 
     .containerProdusctos{
-        width: 100%;
         grid-template-rows: 100px 1fr;
     }
     .filtro .shirt,.filtro .all,.filtro .shirt,.filtro .hoddie,.filtro .sweater{
@@ -806,6 +810,10 @@ font-family: serif;
     .bx-sun{
         right: 7rem;
         font-size: 1.7rem;
+    }
+    footer{
+        margin: 0;
+        padding: 2rem;
     }
 
 }
@@ -826,17 +834,16 @@ font-family: serif;
    .containerProdusctos{
     align-content: center;
     align-items: center;
-    width: 100%;
     margin: 0 auto;
    } 
    .producto{
     margin: 0 auto;
    }
-   footer{
-    width: 100%;
-    margin: 0;
-    padding: 4rem 0;
-   }
+
+    footer{
+        padding: 2rem 2rem 6rem 2rem;
+    }
+   
 }
 
 @media (max-width:537px){
@@ -861,6 +868,7 @@ font-family: serif;
         gap: 8rem;
 
     }
+   
 }
 @media (max-width:410px){
     .productos{
