@@ -114,6 +114,8 @@ function carro(){
     cart=JSON.parse(window.localStorage.getItem("Prodselect"))
     const comprar=document.querySelector(".bx-cart")
     const comprar1=document.querySelector(".canti")
+    const comprar2=document.querySelector(".menuu .bx-cart")
+    const comprar3=document.querySelector(".menuu .canti")
     const cerarHtml=document.querySelector(".cerrar")
     const main_comprar=document.querySelector(".cart-com")
    
@@ -121,6 +123,12 @@ function carro(){
         main_comprar.classList.toggle("mostrar")
     })
     comprar1.addEventListener('click',function(){
+        main_comprar.classList.toggle("mostrar")
+    })
+    comprar2.addEventListener('click',function(){
+        main_comprar.classList.toggle("mostrar")
+    })
+    comprar3.addEventListener('click',function(){
         main_comprar.classList.toggle("mostrar")
     })
     cerarHtml.addEventListener('click',function(){
@@ -132,6 +140,7 @@ function pinatrCart(cart){
     const cart_comHtml= document.querySelector(".producSelec");
     const compra_comHtml= document.querySelector(".comparProduc .producs");
     const comprar1=document.querySelector(".canti")
+    const comprar2=document.querySelector(".menuu .canti")
     let can_produc=0;
     let totalpagar=0;
     
@@ -167,7 +176,8 @@ function pinatrCart(cart){
     if(can_produc!==1){
         html1=`<p class="ff pdark"> ${can_produc} productos <span>$${totalpagar}.00</span></p>`;        
     }
-    comprar1.textContent=can_produc;    
+    comprar1.textContent=can_produc;
+    comprar2.textContent=can_produc;    
     cart_comHtml.innerHTML=html;
     compra_comHtml.innerHTML=html1;
 }
@@ -281,21 +291,15 @@ function animanavbar(){
     const anima= document.querySelector("header");
     const btmenu= document.querySelector("nav");
     const menu= document.querySelector(".menuu");
-    const luna= document.querySelector(".bx-moon");
-    const menuhmt= document.querySelector(".canti");
 
-    btmenu.addEventListener('click',function(e){
+    document.addEventListener('click',function(e){
         if(e.target.classList.contains("bx-menu")){
-            menu.classList.toggle("mostrarmenu");
-            luna.classList.toggle("mostrarmodal")
-            menuhmt.classList.add("z")
+            menu.classList.add("mostrarmenu");
         }
     });
     menu.addEventListener('click',function(e){
         if(e.target.classList.contains("cerrarmenu")){
-            menu.classList.toggle("mostrarmenu");
-            luna.classList.togle("mostrarmodal")
-            menuhmt.classList.remove("z")
+            menu.classList.remove("mostrarmenu");
         }
     });
 
@@ -366,7 +370,10 @@ function dark (){
     const filtrHtml1= document.querySelector(".filtro .all");
     const filtrHtml2= document.querySelector(".filtro .hoddie");
     const filtrHtml3= document.querySelector(".filtro .sweater");
-    const footerHtml= document.querySelector("footer");   
+    const footerHtml= document.querySelector("footer");  
+    const menuHtml= document.querySelector(".menuu");  
+    const menuHtml1= document.querySelector(".bla a");
+    const menuHtml2= document.querySelector(".ble a");
     
     if(Object.values(noche).includes("darkmodeoff")){
         bodyHtml.classList.add("bodydark");
@@ -384,6 +391,9 @@ function dark (){
         filtrHtml2.classList.add("navdark")
         filtrHtml1.classList.add("navdark")
         filtrHtml3.classList.add("navdark")
+        menuHtml.classList.add("menuudar")
+        menuHtml1.classList.add("blanco")
+        menuHtml2.classList.add("blanco")
        
     }else{
         bodyHtml.classList.remove("bodydark");
@@ -401,6 +411,9 @@ function dark (){
         filtrHtml2.classList.remove("navdark")
         filtrHtml1.classList.remove("navdark")
         filtrHtml3.classList.remove("navdark")
+        menuHtml.classList.remove("menuudar")
+        menuHtml1.classList.remove("blanco")
+        menuHtml2.classList.remove("blanco")
     }
 }
 
@@ -513,6 +526,12 @@ async function main (){
     animanavbar()
     darkmode()
     dark ()
+document.addEventListener('click',function(e){
+console.log(e.target.classList);
+});
+
+
+
 }
 
 main();
