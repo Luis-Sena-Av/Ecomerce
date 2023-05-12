@@ -720,6 +720,10 @@ font-family: serif;
 .mostrarmenu{
     right: 0;
 }
+.verde{
+    color: green;
+}
+
 @keyframes loading{
     0% {
         transform: translateY(15);
