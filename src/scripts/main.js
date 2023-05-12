@@ -252,10 +252,10 @@ function alCarroPrincipal(cart,stocktaking){
     const actionsHtml= document.querySelector(".producSelec");
     const comprarHtml= document.querySelector(".compra");
     const ventanamodalhtml=document.querySelector(".modal");
-    const shirt=document.querySelector(".filtro .shirt");
-    const hoddie=document.querySelector(".filtro .hoddie");
-    const all=document.querySelector(".filtro .all");
-    const sweater=document.querySelector(".filtro .sweater");
+    // const shirt=document.querySelector(".filtro .shirt");
+    // const hoddie=document.querySelector(".filtro .hoddie");
+    // const all=document.querySelector(".filtro .all");
+    // const sweater=document.querySelector(".filtro .sweater");
     // agregar desde la modal
     ventanamodalhtml.addEventListener('click',function(e){
         if(e.target.classList.contains("plus-modal")){
@@ -349,11 +349,13 @@ function alCarroPrincipal(cart,stocktaking){
         window.localStorage.setItem("Prodselect",JSON.stringify(cart));
         window.localStorage.setItem("products",JSON.stringify(stocktaking));
         pinatrCart(cart);
-        shirt.classList.remove("mixitup-control-active");
-        hoddie.classList.remove("mixitup-control-active");
-        all.classList.add("mixitup-control-active");
-        sweater.classList.remove("mixitup-control-active");
-        mostrarProductos(stocktaking);        
+        // shirt.classList.remove("mixitup-control-active");
+        // hoddie.classList.remove("mixitup-control-active");
+        // all.classList.add("mixitup-control-active");
+        // sweater.classList.remove("mixitup-control-active");
+        const estado=window.localStorage.getItem("estadofiltro")||"all";
+        productos=filtrado(stocktaking,estado)
+        mostrarProductos(productos);        
     });
     
 }
