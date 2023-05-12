@@ -11,9 +11,7 @@ async function getcharaters(url){
         console.log(error);
     }
 }
-
-function mostrarProductos(){
-    let stocktaking=JSON.parse(window.localStorage.getItem("products"));
+function mostrarProductos(stocktaking){
     let noche=JSON.parse(window.localStorage.getItem("noche"))||{};
     let html="";
     if(Object.values(noche).includes("darkmodeoff")){
@@ -99,17 +97,86 @@ function mostrarProductos(){
     stockproducts.innerHTML=html;
     
 }
+function filtrado(stocktaking,filtrarname){
+ 
+    let arrayfiltro=[];
 
-function menuFiltro(){ mixitup = mixitup(".productos", {
-    selectors: {
-        target: '.container_producto'
-    },
-    animation: {
-        duration: 150
+    if(filtrarname==='all'){
+        for (const produc of Object.values(stocktaking)) {
+            arrayfiltro.push(produc)
+        }
+    }else{
+        for (const produc of Object.values(stocktaking)) {
+            if(produc.category===filtrarname){
+                arrayfiltro.push(produc)
+            }
+        }
     }
-}); 
-}
 
+   
+    return arrayfiltro
+
+}
+function menuFiltro(stocktaking){ 
+    const shirt=document.querySelector(".filtro .shirt");
+    const hoddie=document.querySelector(".filtro .hoddie");
+    const all=document.querySelector(".filtro .all");
+    const sweater=document.querySelector(".filtro .sweater");
+
+    document.querySelector(".filtro").addEventListener('click',function(e){
+        console.log(e.target.classList);
+
+        if(e.target.classList.contains("shirt")){
+            const produsctos=filtrado(stocktaking,'shirt');
+            mostrarProductos(produsctos);
+            window.localStorage.setItem("Producfiltro",JSON.stringify(produsctos));
+            window.localStorage.setItem("estadofiltro","shirt");
+            shirt.classList.add("mixitup-control-active");
+            hoddie.classList.remove("mixitup-control-active");
+            all.classList.remove("mixitup-control-active");
+            sweater.classList.remove("mixitup-control-active");
+        }
+
+        if(e.target.classList.contains("all")){
+            const produsctos=filtrado(stocktaking,'all');
+            mostrarProductos(produsctos);
+            window.localStorage.setItem("Producfiltro",JSON.stringify(produsctos));
+            window.localStorage.setItem("estadofiltro","all");
+            shirt.classList.remove("mixitup-control-active");
+            hoddie.classList.remove("mixitup-control-active");
+            all.classList.add("mixitup-control-active");
+            sweater.classList.remove("mixitup-control-active");
+        }
+
+        if(e.target.classList.contains("hoddie")){
+            const produsctos=filtrado(stocktaking,'hoddie');
+            mostrarProductos(produsctos);
+            window.localStorage.setItem("Producfiltro",JSON.stringify(produsctos));
+            window.localStorage.setItem("estadofiltro","hoddie");
+            shirt.classList.remove("mixitup-control-active");
+            hoddie.classList.add("mixitup-control-active");
+            all.classList.remove("mixitup-control-active");
+            sweater.classList.remove("mixitup-control-active");
+        }
+
+        if(e.target.classList.contains("sweater")){
+            const produsctos=filtrado(stocktaking,'sweater');
+            mostrarProductos(produsctos);
+            window.localStorage.setItem("Producfiltro",JSON.stringify(produsctos));
+            window.localStorage.setItem("estadofiltro","sweater");
+            shirt.classList.remove("mixitup-control-active");
+            hoddie.classList.remove("mixitup-control-active");
+            all.classList.remove("mixitup-control-active");
+            sweater.classList.add("mixitup-control-active");
+        }
+
+    });
+
+
+
+
+
+}
 function carro(){
     cart=JSON.parse(window.localStorage.getItem("Prodselect"))
     const comprar=document.querySelector(".bx-cart")
@@ -135,7 +202,6 @@ function carro(){
         main_comprar.classList.remove("mostrar")
     });
 }
-
 function pinatrCart(cart){
     const cart_comHtml= document.querySelector(".producSelec");
     const compra_comHtml= document.querySelector(".comparProduc .producs");
@@ -181,14 +247,16 @@ function pinatrCart(cart){
     cart_comHtml.innerHTML=html;
     compra_comHtml.innerHTML=html1;
 }
-
-
 function alCarroPrincipal(cart,stocktaking){
     const productHtml= document.querySelector(".productos");
     const actionsHtml= document.querySelector(".producSelec");
     const comprarHtml= document.querySelector(".compra");
     const ventanamodalhtml=document.querySelector(".modal");
-    
+    const shirt=document.querySelector(".filtro .shirt");
+    const hoddie=document.querySelector(".filtro .hoddie");
+    const all=document.querySelector(".filtro .all");
+    const sweater=document.querySelector(".filtro .sweater");
+    // agregar desde la modal
     ventanamodalhtml.addEventListener('click',function(e){
         if(e.target.classList.contains("plus-modal")){
             const id=Number(e.target.id);
@@ -213,7 +281,7 @@ function alCarroPrincipal(cart,stocktaking){
         }
 
     });
-
+    // agregar desde ventana principal
     productHtml.addEventListener('click',function(e){
         if(e.target.classList.contains("bx-plus")){
             const id=Number(e.target.id);
@@ -239,7 +307,7 @@ function alCarroPrincipal(cart,stocktaking){
         }   
        
     });
-    
+    // interactuar desde los productos del carrito
     actionsHtml.addEventListener('click',function(e){
         if(e.target.classList.contains("bx-minus")){
             const id=Number(e.target.classList[2]);
@@ -269,7 +337,7 @@ function alCarroPrincipal(cart,stocktaking){
         window.localStorage.setItem("Prodselect",JSON.stringify(cart));
         pinatrCart(cart);   
     });
-
+    // Comprar
     comprarHtml.addEventListener('click',function(e){
         for (const produc of Object.values(cart)) {
             const id=produc.id;
@@ -281,11 +349,14 @@ function alCarroPrincipal(cart,stocktaking){
         window.localStorage.setItem("Prodselect",JSON.stringify(cart));
         window.localStorage.setItem("products",JSON.stringify(stocktaking));
         pinatrCart(cart);
-        mostrarProductos();        
+        shirt.classList.remove("mixitup-control-active");
+        hoddie.classList.remove("mixitup-control-active");
+        all.classList.add("mixitup-control-active");
+        sweater.classList.remove("mixitup-control-active");
+        mostrarProductos(stocktaking);        
     });
     
 }
-
 function animanavbar(){
     const dia=document.querySelector(".bx-sun");
     const anima= document.querySelector("header");
@@ -364,16 +435,18 @@ function animanavbar(){
     
 }
 
-function darkmode(){
+function darkmode(stocktaking){
     const dia=document.querySelector(".bx-sun");
     const clase_noche=document.querySelector(".bx-moon");
+    
     //noche 
     clase_noche.addEventListener('click',function(){
         clase_noche.classList.toggle("darkmodeoff");
         dia.classList.toggle("darkmodeoff");
         window.localStorage.setItem("noche",JSON.stringify(clase_noche.classList));
-        mostrarProductos();
         dark ()
+        let produc=JSON.parse(window.localStorage.getItem("Producfiltro"))||stocktaking;
+        mostrarProductos(produc);
         animanavbar()
     });
     // dia
@@ -381,8 +454,9 @@ function darkmode(){
         clase_noche.classList.toggle("darkmodeoff");
         dia.classList.toggle("darkmodeoff");
         window.localStorage.setItem("noche",JSON.stringify(clase_noche.classList));
-        mostrarProductos();
         dark ()
+        let produc=JSON.parse(window.localStorage.getItem("Producfiltro"))||stocktaking;
+        mostrarProductos(produc);
         animanavbar()
     });
     
@@ -448,8 +522,6 @@ function dark (){
         menuHtml2.classList.remove("blanco")
     }
 }
-
-
 function modal(id,producto){
     let noche= JSON.parse(window.localStorage.getItem("noche"))||{};
     const ventanamodalhtml=document.querySelector(".modal");
@@ -538,11 +610,20 @@ function modal(id,producto){
             ventanamodalhtml.classList.toggle("mostrarmodal");    
       
 }
-
+function load(){
+    window.addEventListener("load",function(){
+        setTimeout(function(){
+            document
+                    .querySelector(".load")
+                    .classList.add("cierraload")
+        },2000);
+    });
+}
 async function main (){
     let stocktaking=JSON.parse(window.localStorage.getItem("products"))||await getcharaters(url);
     let cart=JSON.parse(window.localStorage.getItem("Prodselect"))||{};
     let noche= JSON.parse(window.localStorage.getItem("noche"))||{};
+    let estado=window.localStorage.setItem("estadofiltro","shirt")||"all";
     const diamode=document.querySelector(".bx-sun");
     const clase_noche=document.querySelector(".bx-moon");
     if(Object.values(noche).includes("darkmodeoff")){
@@ -550,26 +631,16 @@ async function main (){
     }else{
         clase_noche.classList.toggle("darkmodeoff");
     }
-    mostrarProductos()
-    menuFiltro()
+    let producamostrar=filtrado (stocktaking,'all');
+    load()
+    mostrarProductos(producamostrar)
+    menuFiltro(stocktaking)
     carro()
     alCarroPrincipal(cart,stocktaking,noche);
     pinatrCart(cart)
     animanavbar()
-    darkmode()
+    darkmode(stocktaking)
     dark ()
-document.addEventListener('click',function(e){
-console.log(e.target.classList);
-});
-
 }
-
-window.addEventListener("load",function(){
-    setTimeout(function(){
-        document
-                .querySelector(".load")
-                .classList.add("cierraload")
-    },3000);
-});
 
 main();

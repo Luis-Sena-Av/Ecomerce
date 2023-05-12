@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ecomerce</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mixitup/3.3.1/mixitup.min.js" integrity="sha512-nKZDK+ztK6Ug+2B6DZx+QtgeyAmo9YThZob8O3xgjqhw2IVQdAITFasl/jqbyDwclMkLXFOZRiytnUrXk/PM6A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="./src/scripts/main.js" defer></script>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -54,8 +53,8 @@
             </div>
         </div>
         <div class="containerProdusctos" id="products">
-            <div class="filtro">
-                <button class="all "  data-filter="all">Show all</button>
+            <div class="filtro" id="filtro">
+                <button class="all mixitup-control-active"  data-filter="all">Show all</button>
                 <button class="shirt " data-filter=".shirt">Shirt</button>
                 <button class="hoddie " data-filter=".hoddie">Hoddie</button>
                 <button class="sweater " data-filter=".sweater">Sweater</button>
