@@ -140,8 +140,6 @@ width: 35px;
 
 /* home */
 .home{
-    grid-row: 1/2;
-    grid-column: 1/2;
     background-color:var(--bg);
     display: grid;
     grid-template-columns: 1.5fr 1fr;
@@ -186,18 +184,16 @@ background-color: var(--bg-dark);
 }
 .imgnewcolec{
     background-color:var(--color-fot2);
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 80vh;
-    gap: 1rem; 
+    min-height: 400px;
+    padding: 1.5rem;
 }
 .imagenewcolecdark{
     --color-fot2:var(--img-newcolecdark);
 }
 .imgnewcolec img{
-    width: 100%;
     display: block;
+    width: 100%;
 }
 
 /* Fin home */
@@ -288,8 +284,6 @@ transition: transform 0.5s;
     --color-leter:var(--white);
 }
 .containerProdusctos{
-    grid-row: 2/3;
-    grid-column: 1/2;
     width: 100%;
     display: grid;
     grid-template-rows: 50px 1fr;
@@ -297,6 +291,7 @@ transition: transform 0.5s;
     margin: 0 auto;
     max-width: 1024px;
     padding: 1rem;
+    padding-top: 20vh;
 }
 .filtro{
    display: grid;
@@ -333,9 +328,8 @@ transition: transform 0.5s;
     color: var(--white);
 }
 .container{
-   display: grid;
-   grid-template-columns: 1fr;
-   grid-template-rows: 100vh 1fr 80vh;
+   max-width: 1024px;
+   margin: auto;
 }
 .descripcion .bx-plus{
     background-color:var(--white);
@@ -368,8 +362,6 @@ transition: transform 0.5s;
 
 /* footer */
 footer{
-    grid-row: 3/4;
-    grid-column: 1/2;
     display: flex;
     background-color:var(--color-footer);
     padding: 80px 32px;
@@ -782,10 +774,7 @@ font-family: serif;
 }
 
 @media(max-width:700px){
-    .container{
-        grid-template-rows: 100vh 1fr 120vh;
-        gap: 3rem;
-    }
+   
     .home{
         background-color:var(--bg);
         display: grid;
@@ -808,6 +797,7 @@ font-family: serif;
         grid-column: 2/3;
         grid-row: 1/2;
         height: 50vh;
+        min-height: 50vh;
     }
 
     .fot1{
@@ -900,11 +890,7 @@ font-family: serif;
    
 }
 
-@media (max-width:537px){
-    .container{
-        grid-template-rows: 100vh 1fr 130vh;
-    }
-}
+
 @media (max-width:490px){
     .productos{
         grid-template-rows: repeat(1fr);
@@ -917,10 +903,6 @@ font-family: serif;
         width: 230px;
         display: block;
        }
-       .container{
-        gap: 8rem;
-
-    }
    
 }
 @media (max-width:410px){
@@ -936,10 +918,6 @@ font-family: serif;
         display: block;
         object-fit: cover;
        }
-       .container{
-        gap: 8rem;
-
-        }
         .containerProdusctos{
             padding: 0;
             margin: 0;
