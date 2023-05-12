@@ -184,9 +184,11 @@ background-color: var(--bg-dark);
 }
 .imgnewcolec{
     background-color:var(--color-fot2);
-    height: 80vh;
     min-height: 400px;
     padding: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .imagenewcolecdark{
     --color-fot2:var(--img-newcolecdark);
@@ -220,6 +222,9 @@ background-color: var(--bg-dark);
     text-align: center;
     position: relative;
     width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .producto img{
 transition: transform 0.5s;
@@ -291,7 +296,7 @@ transition: transform 0.5s;
     margin: 0 auto;
     max-width: 1024px;
     padding: 1rem;
-    padding-top: 20vh;
+    padding-top: 3rem;
 }
 .filtro{
    display: grid;
@@ -328,7 +333,7 @@ transition: transform 0.5s;
     color: var(--white);
 }
 .container{
-   max-width: 1024px;
+    width: 100%;
    margin: auto;
 }
 .descripcion .bx-plus{
@@ -362,12 +367,8 @@ transition: transform 0.5s;
 
 /* footer */
 footer{
-    display: flex;
     background-color:var(--color-footer);
-    padding: 80px 32px;
     width: 100%;
-    flex-direction: column;
-    gap: 2rem;
     margin-top: 4rem;  
 }
 .footerdark{
@@ -380,15 +381,15 @@ footer{
     flex-direction: row;
     font-size: 1.5rem;
 }
-footer p{
-    color: green;
-}
-.fot2{
+footer>p{
     text-align: center;
-    background-color:var(--color-fot2);
     padding: 1rem;
     color: var(--white);
+    justify-content: center;
+    margin: 0 auto;
+    background-color: var(--color-fot2);
 }
+
 
 /* Fin footer */
 
@@ -779,10 +780,10 @@ font-family: serif;
         background-color:var(--bg);
         display: grid;
         grid-template-columns: 1fr 1fr;
-        grid-template-rows: 1fr 1fr;
+        grid-template-rows: 400px 400px;
         margin: 0;
         gap: 1rem;
-        min-height: 80vh;
+        min-height: 800px;
     }
     .newcolec{
         grid-column: 1/3;
@@ -791,13 +792,14 @@ font-family: serif;
         justify-content:start ;
         align-items: start;
         padding: 1rem 2rem;
+        min-height: 400px;
         
     }
     .imgnewcolec{
         grid-column: 2/3;
         grid-row: 1/2;
-        height: 50vh;
-        min-height: 50vh;
+        min-height: 300px;
+        overflow: hidden;
     }
 
     .fot1{
@@ -911,13 +913,30 @@ font-family: serif;
         grid-template-columns:250px;
         margin: 0 auto;
         padding: 1.3rem;
+        min-height: 7400px;
         
        }
-       .productos img{
-        width: 90%;
-        display: block;
-        object-fit: cover;
-       }
+   
+       .home{
+        grid-template-rows: 250px 250px;
+        min-height: 600px;
+        }
+        .home .imgnewcolec{
+            min-height: 250px;
+        }
+        .newcolec h2{
+            font-size: 2rem;
+        }
+        .newcolec p{
+            font-size: 1rem;
+
+        }
+        .newcolec {
+            min-height: 300px;
+            height: 320px;
+
+        }
+       
         .containerProdusctos{
             padding: 0;
             margin: 0;
@@ -934,5 +953,14 @@ font-family: serif;
              cursor: pointer;
              background-color: var(--bg);
          }
+}
+@media (max-width:490px){
+    .newcolec{
+        height: 400px;
+        min-width: 400px;
+        
+       }
+
+   
 }
 /* -----Fin condicionales */

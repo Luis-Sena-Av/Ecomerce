@@ -467,7 +467,6 @@ function dark (){
     const newcolecHtml=document.querySelector(".imgnewcolec");
     const carcomHtml= document.querySelector(".cart-com");
     const cerrarhtml= document.querySelector(".cerrar");
-    const fot2Html=document.querySelector(".fot2");
     const anima= document.querySelector("header");
     const ancor=document.querySelector("#a");
     const ancor1=document.querySelector("#a1");
@@ -487,7 +486,6 @@ function dark (){
         carcomHtml.classList.add("cart-comdark");
         cerrarhtml.classList.add("cerrardark");
         footerHtml.classList.add("footerdark");
-        fot2Html.classList.add("imagenewcolecdark")
         anima.classList.remove("anima-headr")
         anima.classList.add("anima-headrdark")
         ancor.classList.add("navdark")
@@ -507,7 +505,6 @@ function dark (){
         carcomHtml.classList.remove("cart-comdark");
         cerrarhtml.classList.remove("cerrardark");
         footerHtml.classList.remove("footerdark");
-        fot2Html.classList.remove("imagenewcolecdark")
         anima.classList.add("anima-headr")
         anima.classList.remove("anima-headrdark")
         ancor.classList.remove("navdark")
