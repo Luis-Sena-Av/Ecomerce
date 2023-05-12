@@ -717,16 +717,9 @@ font-family: serif;
     font-size: 2.3rem;
     cursor: pointer;
 }
-
-
 .mostrarmenu{
     right: 0;
 }
-
-
-
-
-
 @keyframes loading{
     0% {
         transform: translateY(15);
@@ -776,12 +769,6 @@ font-family: serif;
     visibility: hidden;
   }
 /* ---Fin scroll general */
-
-/* scroll carrito */
-
-/* scroll carrito */
-
-/* Fin otros */
 
 /* Condicionales */
 @media (max-width:900px){
