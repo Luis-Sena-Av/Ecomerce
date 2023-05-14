@@ -11,6 +11,8 @@ async function getcharaters(url){
         console.log(error);
     }
 }
+
+// La función mostrarProductos muestra los productos el array stocktaking en la pantalla principal
 function mostrarProductos(stocktaking){
     let noche=JSON.parse(window.localStorage.getItem("noche"))||{};
     let html="";
@@ -19,7 +21,7 @@ function mostrarProductos(stocktaking){
       
             if(quantity>0){
                 html+=`
-            <div class="container_producto ${category} container_productodark">
+            <div class="container_producto  container_productodark">
                 <div class="producto backdroundark">
                     <img src="${image}" alt="${name}">       
                 </div>
@@ -31,9 +33,11 @@ function mostrarProductos(stocktaking){
                 
             </div>                 
             `;
-            }else{
+            }
+            
+            if(quantity===0){
                 html+=`
-                <div class="container_producto ${category} container_productodark">
+                <div class="container_producto  container_productodark">
                     <div class="producto backdroundark">
                         <img src="${image}" alt="${name}">  
                              <p class="agotado">Producto agotado</p>    
@@ -50,12 +54,13 @@ function mostrarProductos(stocktaking){
             
             
         }
-     }else{
+
+    }else{
         for (const {category,id,image,name,price,quantity } of stocktaking) {
       
             if(quantity>0){
                 html+=`
-            <div class="container_producto ${category}">
+            <div class="container_producto">
                 <div class="producto">
                     <img src="${image}" alt="${name}">       
                 </div>
@@ -67,9 +72,11 @@ function mostrarProductos(stocktaking){
                 
             </div>                 
             `;
-            }else{
+            }
+            
+            if(quantity===0){
                 html+=`
-                <div class="container_producto ${category}">
+                <div class="container_producto">
                     <div class="producto">
                         <img src="${image}" alt="${name}">  
                         <p class="agotado">Producto agotado</p>    
@@ -82,30 +89,26 @@ function mostrarProductos(stocktaking){
                     
                 </div>                 
                 `;
-            }
-            
-            
+            }   
         }
-     }
-        
-        
-
-    
-
+    }  
     
     const stockproducts=document.querySelector(".productos")
     stockproducts.innerHTML=html;
-    
 }
+
+// La función filtrado crea un arreglo de productos en stocktakin de acuerdo a la categoría filtrarname 
 function filtrado(stocktaking,filtrarname){
- 
+
     let arrayfiltro=[];
 
     if(filtrarname==='all'){
         for (const produc of Object.values(stocktaking)) {
             arrayfiltro.push(produc)
         }
-    }else{
+
+    }
+    else{
         for (const produc of Object.values(stocktaking)) {
             if(produc.category===filtrarname){
                 arrayfiltro.push(produc)
@@ -113,28 +116,59 @@ function filtrado(stocktaking,filtrarname){
         }
     }
 
-   
     return arrayfiltro
 
 }
-function menuFiltro(stocktaking){ 
+
+function estadof(){
     const shirt=document.querySelector(".filtro .shirt");
     const hoddie=document.querySelector(".filtro .hoddie");
     const all=document.querySelector(".filtro .all");
     const sweater=document.querySelector(".filtro .sweater");
+    const estado=window.localStorage.getItem("estadofiltro")||"all";
 
-    document.querySelector(".filtro").addEventListener('click',function(e){
-        console.log(e.target.classList);
-
-        if(e.target.classList.contains("shirt")){
-            const produsctos=filtrado(stocktaking,'shirt');
-            mostrarProductos(produsctos);
-            window.localStorage.setItem("Producfiltro",JSON.stringify(produsctos));
-            window.localStorage.setItem("estadofiltro","shirt");
+    if(estado==="shirt"){
             shirt.classList.add("mixitup-control-active");
             hoddie.classList.remove("mixitup-control-active");
             all.classList.remove("mixitup-control-active");
             sweater.classList.remove("mixitup-control-active");
+    }
+    if(estado==="hoddie"){
+        shirt.classList.remove("mixitup-control-active");
+        hoddie.classList.add("mixitup-control-active");
+        all.classList.remove("mixitup-control-active");
+        sweater.classList.remove("mixitup-control-active");
+    }
+    if(estado==="sweater"){
+        shirt.classList.remove("mixitup-control-active");
+        hoddie.classList.remove("mixitup-control-active");
+        all.classList.remove("mixitup-control-active");
+        sweater.classList.add("mixitup-control-active");
+    }
+    if(estado==="all"){
+        shirt.classList.remove("mixitup-control-active");
+        hoddie.classList.remove("mixitup-control-active");
+        all.classList.add("mixitup-control-active");
+        sweater.classList.remove("mixitup-control-active"); 
+        
+    }
+
+}
+
+// realiza el filtrado de productos en la pantalla principal
+function menuFiltro(stocktaking){ 
+  
+    
+
+    document.querySelector(".filtro").addEventListener('click',function(e){
+
+        if(e.target.classList.contains("shirt")){
+
+            const produsctos=filtrado(stocktaking,'shirt');
+            mostrarProductos(produsctos);
+            window.localStorage.setItem("Producfiltro",JSON.stringify(produsctos));
+            window.localStorage.setItem("estadofiltro","shirt");
+          
         }
 
         if(e.target.classList.contains("all")){
@@ -142,10 +176,8 @@ function menuFiltro(stocktaking){
             mostrarProductos(produsctos);
             window.localStorage.setItem("Producfiltro",JSON.stringify(produsctos));
             window.localStorage.setItem("estadofiltro","all");
-            shirt.classList.remove("mixitup-control-active");
-            hoddie.classList.remove("mixitup-control-active");
-            all.classList.add("mixitup-control-active");
-            sweater.classList.remove("mixitup-control-active");
+           
+          
         }
 
         if(e.target.classList.contains("hoddie")){
@@ -153,10 +185,7 @@ function menuFiltro(stocktaking){
             mostrarProductos(produsctos);
             window.localStorage.setItem("Producfiltro",JSON.stringify(produsctos));
             window.localStorage.setItem("estadofiltro","hoddie");
-            shirt.classList.remove("mixitup-control-active");
-            hoddie.classList.add("mixitup-control-active");
-            all.classList.remove("mixitup-control-active");
-            sweater.classList.remove("mixitup-control-active");
+          
         }
 
         if(e.target.classList.contains("sweater")){
@@ -164,21 +193,17 @@ function menuFiltro(stocktaking){
             mostrarProductos(produsctos);
             window.localStorage.setItem("Producfiltro",JSON.stringify(produsctos));
             window.localStorage.setItem("estadofiltro","sweater");
-            shirt.classList.remove("mixitup-control-active");
-            hoddie.classList.remove("mixitup-control-active");
-            all.classList.remove("mixitup-control-active");
-            sweater.classList.add("mixitup-control-active");
+           
         }
+
+        estadof()
 
     });
 
-
-
-
-
 }
+
+// para mostrar el carrito de compras
 function carro(){
-    cart=JSON.parse(window.localStorage.getItem("Prodselect"))
     const comprar=document.querySelector(".bx-cart")
     const comprar1=document.querySelector(".canti")
     const comprar2=document.querySelector(".menuu .bx-cart")
@@ -202,6 +227,8 @@ function carro(){
         main_comprar.classList.remove("mostrar")
     });
 }
+
+// Para pintar los productos y el total a pagar en el carrito
 function pinatrCart(cart){
     const cart_comHtml= document.querySelector(".producSelec");
     const compra_comHtml= document.querySelector(".comparProduc .producs");
@@ -210,12 +237,15 @@ function pinatrCart(cart){
     let can_produc=0;
     let totalpagar=0;
     
+    // calcula la cantidad de productos y el total a pagar de los productos en el carrito
     for (const {cantidadProd,price} of Object.values(cart)) {
         can_produc+=cantidadProd;
         totalpagar+=cantidadProd*price
     }
     let html=``;
     let html1=``;
+
+    // para pintar productos en el carrito
     for (const productoSel of Object.values(cart)) {
     
         html+=`<div class="prodaComp">
@@ -236,28 +266,32 @@ function pinatrCart(cart){
         </div>`;            
     }
  
+    // pinta cantidad de productos y total a pagar en el carrito
     if(can_produc===1){
         html1=`<p class="ff pdark"> ${can_produc} producto <span>$${totalpagar}.00</span></p>`;  
     }
     if(can_produc!==1){
         html1=`<p class="ff pdark"> ${can_produc} productos <span>$${totalpagar}.00</span></p>`;        
     }
+
+    // pinta la cantidad de productos en el carrito en el header
     comprar1.textContent=can_produc;
     comprar2.textContent=can_produc;    
     cart_comHtml.innerHTML=html;
     compra_comHtml.innerHTML=html1;
 }
+
+
 function alCarroPrincipal(cart,stocktaking){
     const productHtml= document.querySelector(".productos");
     const actionsHtml= document.querySelector(".producSelec");
     const comprarHtml= document.querySelector(".compra");
     const ventanamodalhtml=document.querySelector(".modal");
-    // const shirt=document.querySelector(".filtro .shirt");
-    // const hoddie=document.querySelector(".filtro .hoddie");
-    // const all=document.querySelector(".filtro .all");
-    // const sweater=document.querySelector(".filtro .sweater");
-    // agregar desde la modal
+  
+    // manejo de ventana modal
     ventanamodalhtml.addEventListener('click',function(e){
+
+        // agregar productos desde la modal
         if(e.target.classList.contains("plus-modal")){
             const id=Number(e.target.id);
             const productClic=stocktaking.find(element => element.id ===id);
@@ -272,16 +306,19 @@ function alCarroPrincipal(cart,stocktaking){
             }else{
                 cart[productClic.id]={...productClic,cantidadProd:1}
             }
+
             window.localStorage.setItem("Prodselect",JSON.stringify(cart)); 
             pinatrCart(cart)  
         }
 
+        // cerrar ventana modal
         if(e.target.classList.contains("cerrar")){
             ventanamodalhtml.classList.toggle("mostrarmodal");
         }
 
     });
-    // agregar desde ventana principal
+
+    // interactual con la ventana principal de productos
     productHtml.addEventListener('click',function(e){
         if(e.target.classList.contains("bx-plus")){
             const id=Number(e.target.id);
@@ -300,6 +337,8 @@ function alCarroPrincipal(cart,stocktaking){
             window.localStorage.setItem("Prodselect",JSON.stringify(cart)); 
             pinatrCart(cart)  
         }
+
+        // para abrir ventana modal de producto
         if(e.target.classList.contains("mode")){
             id=Number(e.target.id) 
             const producto=stocktaking.find(element => element.id ===id);
@@ -307,18 +346,24 @@ function alCarroPrincipal(cart,stocktaking){
         }   
        
     });
+
     // interactuar desde los productos del carrito
     actionsHtml.addEventListener('click',function(e){
+
+        // disminuir cantidad
         if(e.target.classList.contains("bx-minus")){
             const id=Number(e.target.classList[2]);
             const productClic=Object.values(cart).find(element => element.id ===id);
             if(productClic.cantidadProd===1){
-                confirm("Desea eliminar el producto")
-                delete cart[productClic.id]; 
+                if(confirm("Desea eliminar el producto del carrito")){
+                    delete cart[productClic.id]; 
+                } 
             }else{
                 cart[productClic.id].cantidadProd--;
             }
         }
+
+        // aumentar cantidad
         if(e.target.classList.contains("bx-plus")){
             const id=Number(e.target.classList[2]);
             const productClic=Object.values(cart).find(element => element.id ===id);
@@ -328,37 +373,46 @@ function alCarroPrincipal(cart,stocktaking){
                 cart[productClic.id].cantidadProd++;
             }
         }
+
+        // Eliminar producto
         if(e.target.classList.contains("bx-trash")){
             const id=Number(e.target.classList[2]);
             const productClic=Object.values(cart).find(element => element.id ===id);
-                confirm("Desea eliminar el producto del carrito")
-                delete cart[productClic.id];
+            if(confirm("Desea eliminar el producto del carrito")){
+                delete cart[productClic.id]; 
+            } 
         }
+
         window.localStorage.setItem("Prodselect",JSON.stringify(cart));
         pinatrCart(cart);   
     });
+
     // Comprar
-    comprarHtml.addEventListener('click',function(e){
+    comprarHtml.addEventListener('click',function(){
+
         for (const produc of Object.values(cart)) {
+
             const id=produc.id;
+
             if(stocktaking[produc.id-1].id===produc.id){
                 stocktaking[produc.id-1].quantity=stocktaking[produc.id-1].quantity-produc.cantidadProd  
             }
+
+            window.localStorage.setItem("products",JSON.stringify(stocktaking));
         }
         cart={};
         window.localStorage.setItem("Prodselect",JSON.stringify(cart));
-        window.localStorage.setItem("products",JSON.stringify(stocktaking));
+       
         pinatrCart(cart);
-        // shirt.classList.remove("mixitup-control-active");
-        // hoddie.classList.remove("mixitup-control-active");
-        // all.classList.add("mixitup-control-active");
-        // sweater.classList.remove("mixitup-control-active");
+
         const estado=window.localStorage.getItem("estadofiltro")||"all";
         productos=filtrado(stocktaking,estado)
         mostrarProductos(productos);        
     });
     
 }
+
+
 function animanavbar(){
     const dia=document.querySelector(".bx-sun");
     const anima= document.querySelector("header");
@@ -463,6 +517,8 @@ function darkmode(stocktaking){
     });
     
 }
+
+
 function dark (){
     let noche= JSON.parse(window.localStorage.getItem("noche"))||{};
     const bodyHtml=document.querySelector("body");
@@ -521,6 +577,7 @@ function dark (){
         menuHtml2.classList.remove("blanco")
     }
 }
+
 function modal(id,producto){
     let noche= JSON.parse(window.localStorage.getItem("noche"))||{};
     const ventanamodalhtml=document.querySelector(".modal");
@@ -622,7 +679,7 @@ async function main (){
     let stocktaking=JSON.parse(window.localStorage.getItem("products"))||await getcharaters(url);
     let cart=JSON.parse(window.localStorage.getItem("Prodselect"))||{};
     let noche= JSON.parse(window.localStorage.getItem("noche"))||{};
-    let estado=window.localStorage.setItem("estadofiltro","shirt")||"all";
+    const estado=window.localStorage.getItem("estadofiltro")||"all";
     const diamode=document.querySelector(".bx-sun");
     const clase_noche=document.querySelector(".bx-moon");
     if(Object.values(noche).includes("darkmodeoff")){
@@ -630,16 +687,21 @@ async function main (){
     }else{
         clase_noche.classList.toggle("darkmodeoff");
     }
-    let producamostrar=filtrado (stocktaking,'all');
+    let producamostrar=filtrado (stocktaking, estado);
+    console.log(producamostrar);
+
+    estadof()
     load()
-    mostrarProductos(producamostrar)
+    animanavbar()
     menuFiltro(stocktaking)
+    darkmode(stocktaking)
+    dark ()
+    mostrarProductos(producamostrar)
     carro()
     alCarroPrincipal(cart,stocktaking,noche);
     pinatrCart(cart)
-    animanavbar()
-    darkmode(stocktaking)
-    dark ()
+    
+   
 }
 
 main();
